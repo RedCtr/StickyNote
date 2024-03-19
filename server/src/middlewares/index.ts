@@ -20,6 +20,8 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
             // we set our user to req object
             //@ts-ignore
             req.user = user
+
+            next()
         })
     } catch (error) {
         return res.sendStatus(500)
