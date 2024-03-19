@@ -10,6 +10,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LoaderIcon } from "lucide-react";
+import { axiosInstance } from "@/utils";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const formData = z.object({
   email: z.string().email({
@@ -28,10 +32,34 @@ const UserLoginForm = () => {
   } = useForm<z.infer<typeof formData>>({
     resolver: zodResolver(formData),
   });
+
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function onSubmit(data: z.infer<typeof formData>) {
-    console.log(data);
+  async function onSubmit(userInput: z.infer<typeof formData>) {
+    try {
+      setIsLoading(true);
+
+      const res = await axiosInstance.post("/auth/login", userInput);
+      const user = res.data;
+      console.log("user", user);
+
+      // show toast
+      toast.success(`You've been logged in!`);
+
+      // turn off loading
+      setIsLoading(false);
+
+      // redirect user to home page
+      router.push("/");
+    } catch (error: any) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
