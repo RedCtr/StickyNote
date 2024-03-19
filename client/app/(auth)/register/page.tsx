@@ -1,0 +1,48 @@
+import Link from "next/link";
+
+import { buttonVariants } from "@/components/ui/button";
+import UserRegisterForm from "@/components/UserRegisterForm";
+import { NotebookPen } from "lucide-react";
+import Image from "next/image";
+
+export const metadata = {
+  title: "Create an account",
+  description: "Create an account to get started.",
+};
+
+export default function RegisterPage() {
+  return (
+    <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="hidden lg:block relative h-full bg-yellow-200">
+        <Image
+          alt="girl reading book"
+          src={"/images/reading-book.svg"}
+          fill
+          className="object-cover object-center"
+        />
+      </div>
+      <div className="lg:p-8">
+        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+          <div className="flex flex-col space-y-2 text-center">
+            <NotebookPen className="mx-auto h-6 w-6" />
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Create an account
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Enter your email below to create your account
+            </p>
+          </div>
+          <UserRegisterForm />
+          <p className="px-8 text-center text-sm text-muted-foreground">
+            <Link
+              href="/login"
+              className="hover:text-brand underline underline-offset-4"
+            >
+              You have an account? Sign In
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
