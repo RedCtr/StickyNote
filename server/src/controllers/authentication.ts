@@ -38,12 +38,15 @@ export const register = async (req: Request, res: Response) => {
 
         const expireTime = 2 * 24 * 60 * 60 * 1000 // expires in 2 days (same expiration as jwt token)
         // I used cookie intead of header bc it's more secure (httpOnly: true)
-        res.cookie("AuthToken", generateToken({
+        res.cookie("AUTH-TOKEN", generateToken({
             id: newUser._id.toString(),
             email
         }), {
             httpOnly: true,
-            expires: new Date(Date.now() + expireTime)
+            expires: new Date(Date.now() + expireTime),
+            domain: 'localhost',
+            path: '/'
+
         })
 
         return res.status(201).json(newUser)
@@ -80,12 +83,14 @@ export const login = async (req: Request, res: Response) => {
         const expireTime = 2 * 24 * 60 * 60 * 1000 // expires in 2 days (same expiration as jwt token)
 
         // I used cookie intead of header bc it's more secure (httpOnly: true)
-        res.cookie("AuthToken", generateToken({
+        res.cookie("AUTH-TOKEN", generateToken({
             id: user._id.toString(),
             email
         }), {
             httpOnly: true,
-            expires: new Date(Date.now() + expireTime)
+            expires: new Date(Date.now() + expireTime),
+            domain: 'localhost',
+            path: '/'
         })
 
         return res.status(200).json(user)
