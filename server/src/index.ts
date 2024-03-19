@@ -3,6 +3,7 @@ import compression from "compression"
 import dotenv from "dotenv"
 import cors from "cors"
 import Mongoose from "mongoose"
+import router from "./router"
 
 dotenv.config()
 
@@ -17,7 +18,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(compression())
 
-const port = process.env.PORT || 4000
 
 Mongoose.Promise = Promise
 Mongoose.connect(process.env.DATABASE_URL!)
@@ -25,6 +25,11 @@ Mongoose.connection.on("error", (error) => {
     console.log("Mongo Error", error);
 
 })
+
+const port = process.env.PORT || 4000
+
+app.use('/', router())
+
 
 app.listen(port, () =>
     console.log(`Server is running on port ${port} `)
