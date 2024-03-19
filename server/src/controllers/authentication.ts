@@ -35,6 +35,17 @@ export const register = async (req: Request, res: Response) => {
             }
         })
 
+
+        const expireTime = 2 * 24 * 60 * 60 * 1000 // expires in 2 days (same expiration as jwt token)
+        // I used cookie intead of header bc it's more secure (httpOnly: true)
+        res.cookie("AuthToken", generateToken({
+            id: newUser._id.toString(),
+            email
+        }), {
+            httpOnly: true,
+            expires: new Date(Date.now() + expireTime)
+        })
+
         return res.status(201).json(newUser)
     } catch (error) {
         console.log(error);
