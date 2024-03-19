@@ -1,7 +1,8 @@
 import express, { Express } from "express"
 import compression from "compression"
-import dotenv from "dotenv"
 import cors from "cors"
+import cookieParser from "cookie-parser"
+import dotenv from "dotenv"
 import mongoose from "mongoose"
 import router from "./router"
 
@@ -16,6 +17,7 @@ app.use(cors({
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cookieParser())
 app.use(compression())
 
 
