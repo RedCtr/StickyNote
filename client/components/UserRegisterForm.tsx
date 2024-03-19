@@ -10,6 +10,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LoaderIcon } from "lucide-react";
+import axios from "axios";
+import { axiosInstance } from "@/utils";
+import { User } from "@/types";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const formData = z.object({
   firstName: z.string().min(3, {
@@ -34,11 +39,41 @@ const UserRegisterForm = () => {
   } = useForm<z.infer<typeof formData>>({
     resolver: zodResolver(formData),
   });
-  const [isLoading, setIsLoading] = useState(false);
 
-  async function onSubmit(data: z.infer<typeof formData>) {
-    console.log(data);
-  }
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const onSubmit = async (userInput: z.infer<typeof formData>) => {
+    try {
+      setIsLoading(true);
+
+      const { firstName, lastName, email, password } = userInput;
+      const userData: User = {
+        firstName,
+        lastName,
+        email,
+        password,
+      };
+      const res = await axiosInstance.post("/auth/register", userData);
+      const user = res.data as User;
+
+      // show toast
+      toast.success(`${user.firstName}'s account is created successfully`);
+
+      // turn off loading
+      setIsLoading(false);
+
+      // redirect user to home page
+      router.push("/");
+    } catch (error: any) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className={cn("grid gap-6")}>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { buttonVariants } from "@/components/ui/button";
 import UserRegisterForm from "@/components/UserRegisterForm";
 import { NotebookPen } from "lucide-react";
 import Image from "next/image";
