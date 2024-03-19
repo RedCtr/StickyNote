@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { User } from "../types"
 import { validateUserInput } from "../utils/UserInput"
-import { UserModel } from "../db/users"
+import { createUser, getUserByEmail } from "../db/users"
 import { authentication, random } from "../utils/helpers"
 
 export const register = async (req: Request, res: Response) => {
@@ -17,7 +17,7 @@ export const register = async (req: Request, res: Response) => {
         }
 
         // check if the user email alredy exist
-        const existingUser = await UserModel.findOne({ email: user.email })
+        const existingUser = await getUserByEmail(user.email)
         if (existingUser) {
             return res.status(400).json({ message: "Email already exists" })
         }
@@ -25,7 +25,7 @@ export const register = async (req: Request, res: Response) => {
         // create user 
         const { firstName, lastName, email, password } = user
         const salt = random()
-        const newUser = await UserModel.create({
+        const newUser = await createUser({
             firstName,
             lastName,
             email,
@@ -35,8 +35,9 @@ export const register = async (req: Request, res: Response) => {
             }
         })
 
-        return res.status(201).json(newUser.toObject())
+        return res.status(201).json(newUser)
     } catch (error) {
+        console.log(error);
         return res.sendStatus(500)
     }
 }
