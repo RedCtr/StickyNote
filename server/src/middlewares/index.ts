@@ -8,7 +8,12 @@ const JWT_SECRET = process.env.JWT_SECRET!
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     try {
-        const token = req.cookies["AUTH-TOKEN"]
+        const authorization = req.headers.authorization
+
+        if (!authorization) {
+            return res.status(403).json({ message: "Missing auth header" })
+        }
+        const token = authorization?.split(" ")[1]
 
         if (!token) {
             return res.sendStatus(401)
