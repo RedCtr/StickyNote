@@ -42,7 +42,7 @@ export const getCurrentUser = async (req: Request, res: Response, next: NextFunc
         const currentUser = await getUserByEmail(email)
 
         if (!currentUser) {
-            return res.status(401).json({ message: "User not found" })
+            return res.status(404).json({ message: "User not found" })
         }
 
         // we reset our user the currentUser
