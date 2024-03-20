@@ -12,10 +12,10 @@ dotenv.config()
 const app: Express = express()
 
 app.use(cors({
-    credentials: true,
     origin: 'http://localhost:3000',
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type']
+    allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
 app.use(compression())
