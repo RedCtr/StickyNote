@@ -21,8 +21,8 @@ export async function middleware(req: NextRequest) {
         const user = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
         console.log("user", user);
 
-        if (isAuthPage) {
-            return NextResponse.redirect(new URL('/', req.url))
+        if (isAuthPage || pathname === '/') {
+            return NextResponse.redirect(new URL('/notes', req.url))
         }
 
         return NextResponse.next()
