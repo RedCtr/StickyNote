@@ -8,7 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET!
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     try {
-        const token = req.cookies["AuthToken"]
+        const token = req.cookies["AUTH-TOKEN"]
 
         if (!token) {
             return res.sendStatus(401)
