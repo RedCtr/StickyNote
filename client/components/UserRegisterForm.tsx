@@ -64,7 +64,7 @@ const UserRegisterForm = () => {
       setIsLoading(false);
 
       // redirect user to home page
-      router.push("/");
+      router.push("/notes");
     } catch (error: any) {
       console.log(error);
       if (axios.isAxiosError(error)) {
