@@ -12,7 +12,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { Note } from "@/types";
 import { ChevronLeft, Loader } from "lucide-react";
 import { Input } from "./ui/input";
-import { updateNote } from "@/lib/notes";
 import toast from "react-hot-toast";
 
 const formData = z.object({
@@ -31,11 +30,16 @@ const NoteEditor = ({ note }: { note: Note }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  async function onSubmit(data: FormData) {
+  async function onSubmit(noteData: FormData) {
+    console.log("noteData", noteData);
+
     try {
       setIsSaving(true);
 
-      await updateNote(note._id, data);
+      await fetch(`/api/note/${note._id}`, {
+        method: "PUT",
+        body: JSON.stringify(noteData),
+      });
 
       setIsSaving(false);
 
@@ -102,6 +106,7 @@ const NoteEditor = ({ note }: { note: Note }) => {
             defaultValue={note.content}
             disabled={isSaving}
             className="rounded-[4px] max-w-[750px] focus:outline-none no-underline focus-visible:ring-0"
+            {...register("content", { required: false })}
           />
         </div>
       </div>
