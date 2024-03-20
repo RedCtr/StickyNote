@@ -1,12 +1,9 @@
-import { Note } from "@/types";
+import { Note, NoteData } from "@/types";
 import { axiosInstance } from "@/utils";
 import { cookies } from "next/headers";
 
-type NoteData = {
-    title: string,
-    content: string
-}
 
+const BASE_URL = "http://localhost:4000"
 
 export const getAllNotesByUser = async () => {
     try {
@@ -42,13 +39,15 @@ export const getNoteById = async (noteId: string) => {
 export const updateNote = async (noteId: string, updatedNote: NoteData) => {
     try {
         const token = cookies().get('AUTH-TOKEN')?.value
-        const note = await axiosInstance.put(`/note/${noteId}`, {
+        const note = await fetch(`${BASE_URL}/note/${noteId}`, {
+            method: 'PUT',
+            body: JSON.stringify(updatedNote),
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
             },
-            data: JSON.stringify(updatedNote)
         })
-        return note.data as Note
+        return await note.json() as Note
     } catch (error) {
         console.log("error", error);
 
@@ -58,13 +57,20 @@ export const updateNote = async (noteId: string, updatedNote: NoteData) => {
 export const createNote = async (noteData: NoteData) => {
     try {
         const token = cookies().get('AUTH-TOKEN')?.value
-        const note = await axiosInstance.post('/notes', {
+
+        const res = await fetch(`${BASE_URL}/notes`, {
+            method: 'POST',
+            body: JSON.stringify(noteData),
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
             },
-            data: JSON.stringify(noteData)
         })
-        return note.data as Note
+
+        const note = await res.json()
+        console.log("note", note);
+
+        return note as Note
     } catch (error) {
         console.log("error", error);
 
@@ -74,12 +80,15 @@ export const createNote = async (noteData: NoteData) => {
 export const deleteNote = async (noteId: string) => {
     try {
         const token = cookies().get('AUTH-TOKEN')?.value
-        const note = await axiosInstance.delete(`/note/${noteId}`, {
+        const note = await fetch(`${BASE_URL}/note/${noteId}`, {
+            method: 'DELETE',
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
-            }
+            },
         })
-        return note.data as Note
+
+        return await note.json() as Note
     } catch (error) {
         console.log("error", error);
 

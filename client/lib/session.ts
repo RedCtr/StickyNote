@@ -16,7 +16,3 @@ export const getCurrentUser = async () => {
 
     }
 }
-
-const logout = () => {
-    cookies().set('AUTH-TOKEN', '', { expires: new Date(0) })
-}
