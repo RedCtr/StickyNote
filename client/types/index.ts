@@ -5,3 +5,12 @@ export type User = {
     email: string,
     password?: string
 }
+
+export type Note = {
+    _id: string,
+    title: string,
+    content: string,
+    user: string,
+    createdAt: string,
+    updatedAt: string,
+}

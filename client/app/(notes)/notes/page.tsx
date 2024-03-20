@@ -3,8 +3,10 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/session";
 import NoteCreationButton from "@/components/NoteCreationButton";
 import NoteHeader from "@/components/NoteHeader";
-// import { EmptyPlaceholder } from "@/components/empty-placeholder"
-// import { PostItem } from "@/components/post-item"
+import { getAllNotesByUser } from "@/lib/notes";
+import EmptyPlaceholder from "@/components/EmptyPlaceholder";
+import { NotebookPen } from "lucide-react";
+import NoteItem from "@/components/NoteItem";
 
 export const metadata = {
   title: "Home Note Page",
@@ -12,49 +14,40 @@ export const metadata = {
 
 export default async function HomePage() {
   const user = await getCurrentUser();
-  console.log("user", user);
 
   if (!user) {
     redirect("/login");
   }
 
-  // const posts = await db.post.findMany({
-  //   where: {
-  //     authorId: user.id,
-  //   },
-  //   select: {
-  //     id: true,
-  //     title: true,
-  //     published: true,
-  //     createdAt: true,
-  //   },
-  //   orderBy: {
-  //     updatedAt: "desc",
-  //   },
-  // })
+  const notes = await getAllNotesByUser();
 
   return (
     <div>
       <NoteHeader heading="Notes" text="Create and manage notes.">
-        <NoteCreationButton />
+        <NoteCreationButton variant="default" />
       </NoteHeader>
-      <div>
-        {/* {posts?.length ? (
-          <div className="divide-y divide-border rounded-md border">
-            {posts.map((post) => (
-              <PostItem key={post.id} post={post} />
+      <div className="my-3">
+        {notes && notes.length ? (
+          <div className="flex flex-col gap-y-1">
+            {notes.map((note) => (
+              <NoteItem key={note._id} note={note} />
             ))}
           </div>
         ) : (
           <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>No posts created</EmptyPlaceholder.Title>
-            <EmptyPlaceholder.Description>
-              You don&apos;t have any posts yet. Start creating content.
-            </EmptyPlaceholder.Description>
-            <PostCreateButton variant="outline" />
+            <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
+                <NotebookPen className="h-10 w-10" />
+              </div>
+              <h2 className="mt-6 text-xl font-semibold">No Notes created</h2>
+              <p className="mb-8 mt-2 text-center text-sm font-normal leading-6 text-muted-foreground">
+                You don&apos;t have any notes yet. Start creating content.
+              </p>
+
+              <NoteCreationButton variant="outline" />
+            </div>
           </EmptyPlaceholder>
-        )} */}
+        )}
       </div>
     </div>
   );

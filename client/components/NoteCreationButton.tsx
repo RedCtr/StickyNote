@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { ButtonProps, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { LoaderCircleIcon, Plus } from "lucide-react";
 
-const NoteCreationButton = () => {
+type Variant = "default" | "outline";
+const NoteCreationButton = ({ variant }: { variant: Variant }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -54,7 +55,7 @@ const NoteCreationButton = () => {
   return (
     <button
       onClick={onClick}
-      className={cn(buttonVariants(), "font-raley rounded-md", {
+      className={cn(buttonVariants({ variant }), "font-raley rounded-md", {
         "cursor-not-allowed opacity-60": isLoading,
       })}
       disabled={isLoading}
