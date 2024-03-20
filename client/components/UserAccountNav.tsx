@@ -8,17 +8,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User } from "@/types";
 import { Avatar, AvatarFallback } from "./ui/avatar";
-import { UserRoundIcon } from "lucide-react";
-import Cookies from "js-cookie";
+import { LoaderCircleIcon, UserRoundIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function UserAccountNav({ user }: { user: User }) {
   const router = useRouter();
-
-  const signOut = (e: Event) => {
+  const [isloggingOut, setIsloggingOut] = useState(false);
+  const signOut = async (e: Event) => {
     e.preventDefault();
+    setIsloggingOut(true);
 
-    Cookies.remove("AUTH-TOKEN");
+    await fetch("/api/logout", {
+      method: "GET",
+    });
+
+    setIsloggingOut(false);
 
     router.push("/login");
   };
@@ -43,6 +48,9 @@ export function UserAccountNav({ user }: { user: User }) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onSelect={signOut}>
+          {isloggingOut && (
+            <LoaderCircleIcon className="mr-2 h-4 w-4 animate-spin" />
+          )}
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
