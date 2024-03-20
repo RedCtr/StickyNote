@@ -28,6 +28,26 @@ const NoteOperation = ({ note }: { note: Note }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
+  const deleteNote = async (event: Event) => {
+    event.preventDefault();
+
+    try {
+      setIsDeleteLoading(true);
+
+      await fetch(`/api/note/${note._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setIsDeleteLoading(false);
+      setShowDeleteAlert(false);
+      router.refresh();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <>
       <DropdownMenu>
@@ -52,7 +72,7 @@ const NoteOperation = ({ note }: { note: Note }) => {
 
       {/* Delete Alert Dialog */}
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-[6px]">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -61,21 +81,13 @@ const NoteOperation = ({ note }: { note: Note }) => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="rounded-[4px]">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
-              onClick={async (event) => {
-                event.preventDefault();
-                setIsDeleteLoading(true);
-
-                // const deleted = await deletePost(post.id);
-
-                // if (deleted) {
-                //   setIsDeleteLoading(false);
-                //   setShowDeleteAlert(false);
-                //   router.refresh();
-                // }
-              }}
-              className="bg-red-600 focus:ring-red-600"
+              //@ts-ignore
+              onClick={deleteNote}
+              className="bg-red-600 focus:ring-red-600 rounded-[4px]"
             >
               {isDeleteLoading ? (
                 <LoaderCircleIcon className="mr-2 h-4 w-4 animate-spin" />
