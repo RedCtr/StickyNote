@@ -9,17 +9,12 @@ const NoteSchema = new mongoose.Schema({
 })
 
 
-// pre-save middleware function added to update the updatedAt field 
-// whenever the note is saved or updated.
-
-NoteSchema.pre("save", function (next) {
-    this.updatedAt = new Date()
-    next()
-})
 export const NoteModel = mongoose.model("Note", NoteSchema)
 
 export const getNoteById = (noteId: string, userId: string) => NoteModel.findOne({ _id: noteId, user: userId })
-export const getAllNotesByUser = (userId: string) => NoteModel.find({ user: userId })
+
+// Finding all notes belonging to the user and sort them by updatedAt in descending order
+export const getAllNotesByUser = (userId: string) => NoteModel.find({ user: userId }).sort({ updatedAt: -1 })
 export const createNote = (values: Record<string, any>) => new NoteModel(values).save().then((note) => note.toObject())
 export const updateNote = (noteId: string, userId: string, values: Record<string, any>) =>
     NoteModel.findOneAndUpdate(

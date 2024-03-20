@@ -70,7 +70,7 @@ export const updateUserNote = async (req: Request, res: Response) => {
         //@ts-ignore
         const currentUser = req.user as User
 
-        const updatedNote = await updateNote(id, currentUser.id!, { title, content })
+        const updatedNote = await updateNote(id, currentUser.id!, { title, content, updatedAt: new Date() })
 
         if (!updatedNote) {
             return res.status(404).json({ message: 'Note not found' });
