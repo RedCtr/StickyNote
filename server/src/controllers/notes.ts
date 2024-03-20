@@ -5,6 +5,7 @@ import { User } from "../types"
 export const createUserNote = async (req: Request, res: Response) => {
     try {
         const { title, content } = req.body
+
         if (!title) {
             return res.status(403).json({ message: "Note Title is required" })
         }
@@ -20,6 +21,7 @@ export const createUserNote = async (req: Request, res: Response) => {
 
         return res.status(201).json(newNote)
     } catch (error) {
+        console.log("error", error);
         return res.sendStatus(500)
     }
 }
