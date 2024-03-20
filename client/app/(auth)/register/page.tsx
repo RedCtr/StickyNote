@@ -15,8 +15,9 @@ export default function RegisterPage() {
       <div className="hidden lg:block relative h-full bg-yellow-200">
         <Image
           alt="girl reading book"
-          src={"/images/reading-book.svg"}
+          src={"images/reading-book.svg"}
           fill
+          priority
           className="object-cover object-center"
         />
       </div>
