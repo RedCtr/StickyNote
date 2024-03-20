@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
+import { getUserByEmail } from "../db/users"
 
 dotenv.config()
 
@@ -31,5 +32,26 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     } catch (error) {
         return res.sendStatus(500)
     }
+}
 
+export const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        //@ts-ignore
+        const { email } = req.user
+
+        const currentUser = await getUserByEmail(email)
+
+        if (!currentUser) {
+            return res.status(401).json({ message: "User not found" })
+        }
+
+        // we reset our user the currentUser
+        //@ts-ignore
+        req.user = currentUser
+
+        next()
+
+    } catch (error) {
+        return res.sendStatus(500)
+    }
 }
