@@ -12,7 +12,7 @@ dotenv.config()
 const app: Express = express()
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['https://sticky-note-lac.vercel.app', 'http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
