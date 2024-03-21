@@ -41,8 +41,14 @@ const port = process.env.PORT || 4000
 
 app.use('/', router())
 
+app.get('/test', (req, res) => {
+    return res.status(200).json({ status: "APIs is up and running" })
+})
+
 
 app.listen(port, () =>
     console.log(`Server is running on port ${port} `)
 )
+
+export default app
 
