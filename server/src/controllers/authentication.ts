@@ -44,8 +44,8 @@ export const register = async (req: Request, res: Response) => {
         }), {
             httpOnly: true,
             expires: new Date(Date.now() + expireTime),
-            domain: 'localhost',
-            path: '/'
+            // domain: 'localhost',
+            // path: '/'
 
         })
 
@@ -89,8 +89,8 @@ export const login = async (req: Request, res: Response) => {
         }), {
             httpOnly: true,
             expires: new Date(Date.now() + expireTime),
-            domain: 'localhost',
-            path: '/'
+            // domain: 'localhost',
+            // path: '/'
         })
 
         return res.status(200).json(user)
