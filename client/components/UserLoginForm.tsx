@@ -14,6 +14,7 @@ import { axiosInstance } from "@/utils";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const formData = z.object({
   email: z.string().email({
@@ -43,6 +44,12 @@ const UserLoginForm = () => {
       const res = await axiosInstance.post("/auth/login", userInput);
       const user = res.data;
       console.log("user", user);
+
+      // set AUTH-TOKEN cookies
+      Cookies.set("AUTH-TOKEN", user.token as string, {
+        secure: true,
+        expires: 2, // expire in 2d ays
+      });
 
       // show toast
       toast.success(`You've been logged in!`);

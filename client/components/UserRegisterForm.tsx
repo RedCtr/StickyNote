@@ -15,6 +15,7 @@ import { axiosInstance } from "@/utils";
 import { User } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const formData = z.object({
   firstName: z.string().min(3, {
@@ -55,10 +56,16 @@ const UserRegisterForm = () => {
         password,
       };
       const res = await axiosInstance.post("/auth/register", userData);
-      const user = res.data as User;
+      const user = res.data;
+
+      // set AUTH-TOKEN cookies
+      Cookies.set("AUTH-TOKEN", user.token as string, {
+        secure: true,
+        expires: 2, // expire in 2d ays
+      });
 
       // show toast
-      toast.success(`${user.firstName}'s account is created successfully`);
+      toast.success(`Your registration was successful.`);
 
       // turn off loading
       setIsLoading(false);
