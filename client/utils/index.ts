@@ -2,9 +2,9 @@ import axios from "axios";
 
 
 export const axiosInstance = axios.create({
-    baseURL: 'https://sticky-note-server-7muxqck4m-redctr.vercel.app',
+    baseURL: 'https://sticky-note-server-2plupqqyn-redctr.vercel.app',
     withCredentials: true,
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     },
 })
