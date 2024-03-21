@@ -3,7 +3,7 @@ import { axiosInstance } from "@/utils";
 import { cookies } from "next/headers";
 
 
-const BASE_URL = "https://note-server-production.up.railway.app"
+const BASE_URL = "https://51.21.124.6.nip.io"
 
 export const getAllNotesByUser = async () => {
     try {
