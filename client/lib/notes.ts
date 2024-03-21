@@ -3,7 +3,7 @@ import { axiosInstance } from "@/utils";
 import { cookies } from "next/headers";
 
 
-const BASE_URL = "http://localhost:4000"
+const BASE_URL = "https://sticky-note-server-7muxqck4m-redctr.vercel.app"
 
 export const getAllNotesByUser = async () => {
     try {
