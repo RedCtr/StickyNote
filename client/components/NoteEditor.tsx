@@ -101,6 +101,7 @@ const NoteEditor = ({ note }: { note: Note }) => {
 
           <div className="flex items-center gap-x-3">
             <Select
+              key={status}
               onValueChange={(e) => {
                 setStatus(e);
               }}
@@ -109,14 +110,12 @@ const NoteEditor = ({ note }: { note: Note }) => {
               <SelectTrigger
                 className={cn(
                   "w-[160px] focus:outline-none rounded no-underline focus-visible:ring-0 ring-offset-0 ring-0 border-transparent text-gray-900",
-                  note.status ? "bg-yellow-400" : "bg-gray-400"
+                  status === "completed" ? "bg-yellow-400" : "bg-gray-400"
                 )}
               >
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
-              <SelectContent
-                defaultValue={note.status ? "completed" : "pending"}
-              >
+              <SelectContent>
                 <SelectItem
                   className="focus:outline-none rounded no-underline 
                   focus-visible:ring-0 ring-offset-0 ring-0 border-transparent"
