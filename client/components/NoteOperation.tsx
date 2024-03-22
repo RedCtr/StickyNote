@@ -34,6 +34,8 @@ const NoteOperation = ({ note }: { note: Note }) => {
     try {
       setIsDeleteLoading(true);
 
+      // @TODO: no need to add extra call just to set cookie to header bc it was httponly
+      //  now we can set it from the frontend directly
       await fetch(`/api/note/${note._id}`, {
         method: "DELETE",
         headers: {

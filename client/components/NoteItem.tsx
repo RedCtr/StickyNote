@@ -6,7 +6,7 @@ import { format } from "date-fns";
 const NoteItem = ({ note }: { note: Note }) => {
   return (
     <div
-       data-testid='note-id'
+      data-testid="note-id"
       className="mt-1 flex items-center justify-between p-4 bg-zinc-900 hover:bg-zinc-900/70 
       rounded-[6px] hover:cursor-pointer transition-colors"
     >

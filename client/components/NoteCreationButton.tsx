@@ -17,6 +17,8 @@ const NoteCreationButton = ({ variant }: { variant: Variant }) => {
     setIsLoading(true);
 
     try {
+      // @TODO: no need to add extra call just to set cookie to header bc it was httponly
+      //  now we can set it from the frontend directly
       const res = await fetch("/api/note", {
         method: "POST",
         headers: {

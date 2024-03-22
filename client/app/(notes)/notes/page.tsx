@@ -7,6 +7,7 @@ import { getAllNotesByUser } from "@/lib/notes";
 import EmptyPlaceholder from "@/components/EmptyPlaceholder";
 import { NotebookPen } from "lucide-react";
 import NoteItem from "@/components/NoteItem";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Home Note Page",
@@ -28,11 +29,11 @@ export default async function HomePage() {
       </NoteHeader>
       <div className="my-3">
         {notes && notes.length ? (
-          <div className="notes-test flex flex-col gap-y-1">
-            {notes.map((note) => (
-              <NoteItem key={note._id} note={note} />
-            ))}
-          </div>
+            <div className="notes-test flex flex-col gap-y-1">
+              {notes.map((note) => (
+                <NoteItem key={note._id} note={note} />
+              ))}
+            </div>
         ) : (
           <EmptyPlaceholder>
             <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
