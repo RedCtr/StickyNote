@@ -28,7 +28,7 @@ export default async function HomePage() {
       </NoteHeader>
       <div className="my-3">
         {notes && notes.length ? (
-          <div className="flex flex-col gap-y-1">
+          <div className="notes-test flex flex-col gap-y-1">
             {notes.map((note) => (
               <NoteItem key={note._id} note={note} />
             ))}

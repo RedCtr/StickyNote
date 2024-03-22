@@ -62,7 +62,8 @@ const NoteOperation = ({ note }: { note: Note }) => {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="flex cursor-pointer items-center text-rose-600 hover:text-rose-700"
+            data-testid="delete-btn"
+            className="delete-btn flex cursor-pointer items-center text-rose-600 hover:text-rose-700"
             onSelect={() => setShowDeleteAlert(true)}
           >
             Delete
@@ -85,9 +86,10 @@ const NoteOperation = ({ note }: { note: Note }) => {
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
+              data-testid="delete-btn-modal"
               //@ts-ignore
               onClick={deleteNote}
-              className="bg-red-600 focus:ring-red-600 rounded-[4px]"
+              className="delete-btn-modal bg-red-600 focus:ring-red-600 rounded-[4px]"
             >
               {isDeleteLoading ? (
                 <LoaderCircleIcon className="mr-2 h-4 w-4 animate-spin" />

@@ -45,7 +45,10 @@ const NoteEditor = ({ note }: { note: Note }) => {
 
       router.refresh();
 
-      return toast.success("Your note has been saved.");
+      return toast.success("Your note has been saved.", {
+        id: "succestoast",
+        className: "succestoast",
+      });
     } catch (error) {
       console.log("error", error);
     }

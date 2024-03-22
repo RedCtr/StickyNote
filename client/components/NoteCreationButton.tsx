@@ -43,6 +43,7 @@ const NoteCreationButton = ({ variant }: { variant: Variant }) => {
 
   return (
     <button
+      id="newnote"
       onClick={onClick}
       className={cn(buttonVariants({ variant }), "font-raley rounded-md", {
         "cursor-not-allowed opacity-60": isLoading,
