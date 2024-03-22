@@ -1,8 +1,8 @@
-**StickyNote**: A Full-Stack Note App Built with Next.js and Express.
+**StickyTask**: A Full-Stack Note App Built with Next.js and Express.
 
 ## Requirements
 
-Before running the StickyNote application, ensure you have the following prerequisites:
+Before running the StickyTask application, ensure you have the following prerequisites:
 
 - Node.js installed on your machine ([download here](https://nodejs.org/))
 - MongoDB account set up for database storage ([MongoDB Atlas](https://www.mongodb.com/cloud/atlas) provides a free tier)
@@ -54,5 +54,5 @@ You should start the server before the client and keep both running in separate 
 2. Navigate to `client/`.
 3. Run `npm install`
 4. After the installation completes, run `npm run dev`.
-5. A new web browser window opens and displays the sticky note app.
-6. To run the Playwright tests for the StickyNote app, run `npm run test` or `npm run test:ui`
+5. A new web browser window opens and displays the sticky task app.
+6. To run the Playwright tests for the StickyTask app, run `npm run test` or `npm run test:ui`
