@@ -64,7 +64,7 @@ export const getUserNoteById = async (req: Request, res: Response) => {
 export const updateUserNote = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { title, content } = req.body
+        const { title, content, status } = req.body
 
         if (!id) {
             return res.status(403).json({ message: "Note Id is required" })
@@ -72,7 +72,7 @@ export const updateUserNote = async (req: Request, res: Response) => {
         //@ts-ignore
         const currentUser = req.user as User
 
-        const updatedNote = await updateNote(id, currentUser.id!, { title, content, updatedAt: new Date() })
+        const updatedNote = await updateNote(id, currentUser.id!, { title, content, status, updatedAt: new Date() })
 
         if (!updatedNote) {
             return res.status(404).json({ message: 'Note not found' });
