@@ -10,6 +10,7 @@ export type Note = {
     _id: string,
     title: string,
     content: string,
+    status?: boolean,
     user: string,
     createdAt: string,
     updatedAt: string,
@@ -17,5 +18,6 @@ export type Note = {
 
 export type NoteData = {
     title: string,
-    content?: string
+    content?: string,
+    status?: boolean,
 }

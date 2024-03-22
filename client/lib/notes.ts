@@ -1,9 +1,7 @@
 import { Note, NoteData } from "@/types";
-import { axiosInstance } from "@/utils";
+import { BASE_URL, axiosInstance } from "@/utils";
 import { cookies } from "next/headers";
 
-
-const BASE_URL = "https://51.21.124.6.nip.io"
 
 export const getAllNotesByUser = async () => {
     try {

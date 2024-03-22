@@ -10,7 +10,7 @@ const Navigation = ({ user }: { user: User }) => {
       <div className="container flex h-16 items-center justify-between py-4">
         <Link href="/notes" className="flex items-center space-x-2">
           <NotebookPen />
-          <span className="font-bold sm:inline-block">Sticky Note</span>
+          <span className="font-bold sm:inline-block">Sticky Task</span>
         </Link>
 
         <UserAccountNav user={user} />

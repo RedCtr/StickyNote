@@ -24,25 +24,25 @@ export default async function HomePage() {
 
   return (
     <div>
-      <NoteHeader heading="Notes" text="Create and manage notes.">
+      <NoteHeader heading="Tasks" text="Create and manage tasks.">
         <NoteCreationButton variant="default" />
       </NoteHeader>
       <div className="my-3">
         {notes && notes.length ? (
-            <div className="notes-test flex flex-col gap-y-1">
-              {notes.map((note) => (
-                <NoteItem key={note._id} note={note} />
-              ))}
-            </div>
+          <div className="notes-test flex flex-col gap-y-1">
+            {notes.map((note) => (
+              <NoteItem key={note._id} note={note} />
+            ))}
+          </div>
         ) : (
           <EmptyPlaceholder>
             <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
               <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
                 <NotebookPen className="h-10 w-10" />
               </div>
-              <h2 className="mt-6 text-xl font-semibold">No Notes created</h2>
+              <h2 className="mt-6 text-xl font-semibold">No Tasks created</h2>
               <p className="mb-8 mt-2 text-center text-sm font-normal leading-6 text-muted-foreground">
-                You don&apos;t have any notes yet. Start creating content.
+                You don&apos;t have any tasks yet. Start creating content.
               </p>
 
               <NoteCreationButton variant="outline" />

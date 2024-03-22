@@ -13,6 +13,13 @@ import { Note } from "@/types";
 import { ChevronLeft, Loader } from "lucide-react";
 import { Input } from "./ui/input";
 import toast from "react-hot-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 const formData = z.object({
   title: z.string(),
@@ -30,8 +37,17 @@ const NoteEditor = ({ note }: { note: Note }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  const [status, setStatus] = useState(note.status ? "completed" : "pending");
+
   async function onSubmit(noteData: FormData) {
     console.log("noteData", noteData);
+
+    const taskData = {
+      ...noteData,
+      status: status === "pending" ? false : true,
+    };
+
+    console.log("taskData", taskData);
 
     try {
       setIsSaving(true);
@@ -40,7 +56,7 @@ const NoteEditor = ({ note }: { note: Note }) => {
       //   now we can set it from the frontend directly
       await fetch(`/api/note/${note._id}`, {
         method: "PUT",
-        body: JSON.stringify(noteData),
+        body: JSON.stringify(taskData),
       });
 
       setIsSaving(false);
@@ -82,13 +98,50 @@ const NoteEditor = ({ note }: { note: Note }) => {
               Back
             </>
           </Link>
-          <button
-            type="submit"
-            className={cn(buttonVariants(), "rounded-[6px]")}
-          >
-            {isSaving && <Loader className="mr-2 h-4 w-4 animate-spin" />}
-            <span>Save</span>
-          </button>
+
+          <div className="flex items-center gap-x-3">
+            <Select
+              onValueChange={(e) => {
+                setStatus(e);
+              }}
+              value={status}
+            >
+              <SelectTrigger
+                className={cn(
+                  "w-[160px] focus:outline-none rounded no-underline focus-visible:ring-0 ring-offset-0 ring-0 border-transparent text-gray-900",
+                  note.status ? "bg-yellow-400" : "bg-gray-400"
+                )}
+              >
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent
+                defaultValue={note.status ? "completed" : "pending"}
+              >
+                <SelectItem
+                  className="focus:outline-none rounded no-underline 
+                  focus-visible:ring-0 ring-offset-0 ring-0 border-transparent"
+                  value="pending"
+                >
+                  Pending
+                </SelectItem>
+                <SelectItem
+                  className="focus:outline-none rounded no-underline 
+                  focus-visible:ring-0 ring-offset-0 ring-0 border-transparent"
+                  value="completed"
+                >
+                  Completed
+                </SelectItem>
+              </SelectContent>
+            </Select>
+
+            <button
+              type="submit"
+              className={cn(buttonVariants(), "rounded-[6px]")}
+            >
+              {isSaving && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+              <span>Save</span>
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col mx-auto w-[800px] gap-y-6 my-4 lg:my-10 font-raley">
