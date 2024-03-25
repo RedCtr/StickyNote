@@ -72,6 +72,11 @@ const NoteEditor = ({ note }: { note: Note }) => {
     }
   }
 
+  const onBackClicked = () => {
+    router.push("/notes");
+    router.refresh();
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsMounted(true);
@@ -86,9 +91,8 @@ const NoteEditor = ({ note }: { note: Note }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full gap-10">
         <div className="flex w-full items-center justify-between">
-          <Link
-            href="/notes"
-            onClick={() => router.refresh()}
+          <div
+            onClick={onBackClicked}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "rounded-[6px]"
@@ -98,7 +102,7 @@ const NoteEditor = ({ note }: { note: Note }) => {
               <ChevronLeft className="mr-2 h-4 w-4" />
               Back
             </>
-          </Link>
+          </div>
 
           <div className="flex items-center gap-x-3">
             <Select
