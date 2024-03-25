@@ -88,6 +88,7 @@ const NoteEditor = ({ note }: { note: Note }) => {
         <div className="flex w-full items-center justify-between">
           <Link
             href="/notes"
+            onClick={() => router.refresh()}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "rounded-[6px]"
@@ -147,7 +148,7 @@ const NoteEditor = ({ note }: { note: Note }) => {
           <Input
             id="title"
             autoFocus
-            placeholder="Note Title"
+            placeholder="Task Title"
             type="text"
             defaultValue={note.title}
             disabled={isSaving}
